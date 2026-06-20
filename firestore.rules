@@ -1,0 +1,14 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow messages to be written
+    match /messages/{messageId} {
+      allow read, write: if request.auth != null;
+    }
+    
+    // OR if you want to allow all collections (temporarily)
+    match /{document=**} {
+      allow read, write: if request.auth != null;
+    }
+  }
+}
